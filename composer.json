@@ -1,0 +1,23 @@
+{
+  "repositories": [
+  {
+    "url": "https://github.com/kehikko/kernel.git",
+    "type": "git"
+  },
+  {
+    "url": "https://github.com/kehikko/Core.git",
+    "type": "git"
+  }],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require":
+  {
+    "kehikko/kernel": "master",
+    "kehikko/Core": "master",
+    "twig/twig": "^2.0",
+    "symfony/yaml": "^3.2",
+    "phpFastCache/phpFastCache": "^6.0",
+    "mtdowling/cron-expression": "^1.1",
+    "pear/console_commandline": "^1.2"
+  }
+}
