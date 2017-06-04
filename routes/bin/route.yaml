@@ -1,0 +1,46 @@
+
+get:
+  controller: Bin
+  action: get
+  format: html
+
+get_summernote:
+  controller: Bin
+  action: getSummernote
+  format: html
+
+dl:
+  pattern: /dl/{key|rest}
+  controller: Bin
+  action: dl
+  method: get
+
+image:
+  pattern: /image/{key|rest}
+  controller: Bin
+  action: image
+  method: get
+
+upload:
+  pattern: /upload/{path|rest}
+  controller: Bin
+  action: upload
+  method: post
+
+json:
+  pattern: /json/{key|rest}
+  controller: Bin
+  action: json
+  format: json
+
+folder:
+  pattern: /folder/{key|rest}
+  controller: Bin
+  action: folder
+  format: json
+
+file:
+  pattern: /file/{key|rest}
+  controller: Bin
+  action: file
+  format: json

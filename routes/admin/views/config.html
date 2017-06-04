@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 id='page-title'>{{ tr('title:config') }}</h1>
+
+{{ render('config:editor', { 'data': config }) }}
+
+{% endblock content %}
+

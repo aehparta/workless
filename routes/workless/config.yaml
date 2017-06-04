@@ -1,0 +1,8 @@
+javascript:
+  - jquery.blueimp-gallery.min.js
+  - bootstrap-image-gallery.min.js
+  - twig: workless.js
+css:
+  - workless.css
+  - blueimp-gallery.min.css
+  - bootstrap-image-gallery.min.css

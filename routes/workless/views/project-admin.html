@@ -1,0 +1,36 @@
+<h3>
+  {{ tr('title/project-users') }}
+</h3>
+<div class="panel panel-default">
+  <ul class="workless-project-users-list">
+    {{ render('auth:users-search-form', { options: { classes: 'workless-project-user-list' }}) }}
+    {% for user in users %}
+    <li class="btn btn-primary btn-sm" url="{{ route('project_user_access', { name: project, username: user.get('username') }) }}">
+      <span class="fa fa-spinner fa-pulse fa-fw workless-project-user-loading" style="display: none;">
+      </span>
+      {% if user.get('name') == user.get('username') %}
+        {{ user.get('username') }}
+      {% else %}
+        {{ user.get('name') }} ({{ user.get('username') }})
+      {% endif %}
+      {% if user.get('username') != username() %}
+      <a class="bg-primary workless-project-user-role-remove" href="#">
+        <span class="fa fa-remove fa-fw">
+        </span>
+      </a>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+<div class="hidden workless-project-user-template">
+  <li class="btn btn-primary btn-sm" url="{{ route('project_user_access', { name: project, username: '%username%' }) }}">
+    <span class="fa fa-spinner fa-pulse fa-fw workless-project-user-loading">
+    </span>
+    %name%
+    <a class="bg-primary workless-project-user-role-remove" href="#">
+      <span class="fa fa-remove fa-fw">
+      </span>
+    </a>
+  </li>
+</div>

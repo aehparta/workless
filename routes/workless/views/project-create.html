@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="panel panel-primary">
+  <div class="panel-heading">{{ tr('title/project-create') }}</div>
+  <div class="panel-body">
+    <form class="" role="form" action="{{ route('project_create') }}" method="post">
+      <div class="form-group">
+        <label for="project-name">{{ tr('label/project-name') }}:</label>
+        <input type="text" class="form-control" name="data[name]" id="project-name" value="{{ data.name }}" />
+      </div>
+      <button type="submit" class="btn btn-primary">
+        <span class="glyphicon glyphicon-ok"></span>
+        {{ tr('actions/create') }}
+      </button>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}

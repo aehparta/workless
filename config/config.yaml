@@ -1,0 +1,90 @@
+setup:
+  debug: true
+  cache: false
+    # css: css/all.min.css
+    # javascript: js/all.min.js
+  lang: 'fi'
+  locale: 'en_US.UTF-8'
+  languages:
+    fi: 'Suomi'
+    en: 'English'
+  roles:
+    foreman:
+      type: role
+      title: '{tr:roles/foreman/title}'
+      description: '{tr:roles/foreman/description}'
+    supervisor:
+      type: role
+      title: '{tr:roles/supervisor/title}'
+      description: '{tr:roles/supervisor/description}'
+
+# urls:
+#   base: '/'
+#   error: '/404'
+#   login: '/auth/login/'
+#   assets: '/'
+
+# define autoloader class files here
+modules:
+  # core
+  AbstractModule: 'Core/AbstractModule'
+  Exceptions: 'Core/Exceptions'
+  Controller: 'Core/Controller'
+  Core\Session:
+    authenticators:
+      - UserDefault
+  AbstractUser: 'Auth/AbstractUser'
+  UserDefault:
+    class: 'Auth/Default/UserDefault'
+    file: '{path:config}/users.yaml'
+  AbstractRoles:
+    class: 'Auth/AbstractRoles'
+  RolesDefault:
+    class: 'Auth/Default/RolesDefault'
+  Avatar:
+    class: 'Avatar/Avatar'
+    default: 'bootstrap/images/user.png'
+    gravatar:
+      url: 'http://www.gravatar.com/avatar/'
+      default: 'monsterid'
+  Validate:
+    class: 'Core/Validate'
+
+  Bin:
+    class: 'Bin/BinFile'
+    webdav:
+      url: 'https://mercury.zeraw.biz/owncloud/remote.php/webdav'
+      username: 'aehparta'
+      password: 'at90s1200'
+
+  Workless:
+    class: Workless/Workless
+  WorklessProject:
+    class: Workless/WorklessProject
+
+  API:
+    class: 'API/API'
+
+twig:
+  debug: true
+  cache: false #'{path:cache}/twig'
+
+# basic site js/css includes
+javascript:
+  - common:*
+  - bootstrap:*
+  - fullcalendar:*
+  - bin:*
+  - workless:*
+  - admin:*
+  - site.js
+css:
+  - common:*
+  - bootstrap:*
+  - fullcalendar:*
+  - bin:*
+  - workless:*
+  - admin:*
+  - site.css
+
+

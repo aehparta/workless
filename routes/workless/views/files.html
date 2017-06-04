@@ -1,0 +1,74 @@
+<div class="row workless-files">
+  {% if authorize('role:foreman') or authorize('role:supervisor') %}
+    <div class="col-xs-4 col-sm-3 col-md-2">
+      <div id="workless-files-upload" class="thumbnail text-center">
+        <input type="file" class="bin-upload-files" multiple="multiple" url="{{ route('bin:upload', { path: bin }) }}" progress="worklessUploadProgress" finished="worklessUploadFinished" />
+        <span class="fa fa-upload workless-icon img-responsive"></span>
+        <div class="caption small"" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+          {{ tr('label/upload') }}
+        </div>
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% for file in files if file.type == 'dir' %}
+  <div class="col-xs-4 col-sm-3 col-md-2 workless-file-item">
+    <div class="workless-file-buttons">
+      <a class="btn btn-xs btn-primary workless-folder-download" title="{{ tr('title/folder-download', file.name) }}" href="{{ route('bin:dl', { key: file.key }) }}">
+        <span class="fa fa-download"></span>
+      </a>
+      <a class="btn btn-xs btn-danger workless-file-remove" title="{{ tr('title/delete-folder', file.name) }}" href="{{ route('bin:file', { key: file.key }) }}">
+        <span class="fa fa-remove"></span>
+      </a>
+    </div>
+    <a href="{{ file.url }}" class="thumbnail text-center">
+        <span style="color: #ed7;" class="fa fa-folder-open workless-icon img-responsive"></span>
+        <div class="caption small"" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+            {{ file.name }}
+        </div>
+    </a>
+  </div>
+  {% endfor %}
+  {% for file in files if file.mimetype starts with 'image/' %}
+  <div class="col-xs-4 col-sm-3 col-md-2 workless-file-item">
+      <a class="btn btn-xs btn-danger workless-file-remove workless-file-buttons" title="{{ tr('title/delete-file', file.name) }}" href="{{ route('bin:file', { key: file.key }) }}">
+        <span class="fa fa-remove"></span>
+      </a>
+      <a href="{{ file.url }}" target="_blank" class="thumbnail text-center" title="{{ file.name }}" data-gallery>
+          <img class="img-responsive img-lazyload" alt="{{ file.name }}" data-original="{{ route('bin:image', { key: file.key }, { fit_w: 64, fit_h: 64 }) }}" style="display: none;" />
+          <span class="fa fa-file-image-o workless-icon img-responsive"></span>
+          <div class="caption small" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+              {{ file.name }}
+          </div>
+      </a>
+  </div>
+  {% endfor %}
+  {% for file in files if file.type == 'file' and not (file.mimetype starts with 'image/') %}
+  <div class="col-xs-4 col-sm-3 col-md-2 workless-file-item">
+      <a class="btn btn-xs btn-danger workless-file-remove workless-file-buttons" title="{{ tr('title/delete-file', file.name) }}" href="{{ route('bin:file', { key: file.key }) }}">
+        <span class="fa fa-remove"></span>
+      </a>
+      <a href="{{ file.url }}" target="_blank" class="thumbnail text-center">
+          {% if file.mimetype == 'application/pdf' %}
+          <span style="color: #c77;" class="fa fa-file-pdf-o workless-icon img-responsive"></span>
+          {% elseif file.name ends with '.ods' %}
+          <span style="color: #999;" class="fa fa-file-word-o workless-icon img-responsive"></span>
+          {% elseif file.name ends with '.doc' or file.name ends with '.docx' %}
+          <span style="color: #999;" class="fa fa-file-word-o workless-icon img-responsive"></span>
+          {% elseif file.mimetype starts with 'text/' %}
+          <span style="color: #999;" class="fa fa-file-text-o workless-icon img-responsive"></span>
+          {% elseif file.mimetype starts with 'video/' %}
+          <span style="color: #7c7;" class="fa fa-file-video-o workless-icon img-responsive"></span>
+          {% else %}
+          <span class="fa fa-file-o workless-icon img-responsive"></span>
+          {% endif %}
+          <div class="caption small"" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+              {{ file.name }}
+          </div>
+      </a>
+  </div>
+  {% endfor %}
+</div>

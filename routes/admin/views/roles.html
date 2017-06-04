@@ -1,0 +1,79 @@
+<div class="panel panel-default">
+  <table class="table">
+    <thead>
+      <tr class="bg-primary">
+        <th>
+          <span class="fa fa-lock"></span>
+          {{ tr('label/name') }}
+        </th>
+        <th>
+          <span class="fa fa-info-circle"></span>
+          {{ tr('label/description') }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="hidden">
+        <td colspan="2">
+          <a href="{{ route('role_create') }}" type="button">
+            <span class="glyphicon glyphicon-plus"></span>
+            {{ tr('label/group-create') }}
+          </a>
+        </td>
+      </tr>
+      {% for role in roles if role.type == 'role' %}
+      <tr class="bg-info">
+        <td class="toggle-visibility" toggle-target="#role-users-{{ role.type }}---{{ role.name }}">
+          <span class="glyphicon glyphicon-chevron-right" toggle-class-visible="glyphicon-chevron-down" toggle-class-hidden="glyphicon-chevron-right"></span>
+          {{ role.title }}
+        </td>
+        <td>
+          {{ role.description }}
+        </td>
+      </tr>
+      <tr id="role-users-{{ role.type }}---{{ role.name }}" style="display: none;">
+        <td class="roles-users-list" colspan="2">
+          <div class="hidden roles-user-template">
+            <span class="btn btn-primary btn-sm" url="{{ route('user_role', { username: '%username%', role: role.role }) }}">
+              <span class="fa fa-spinner fa-pulse fa-fw roles-user-loading"></span>
+              %name%
+              <a class="bg-primary roles-user-role-remove" href="#">
+                <span class="fa fa-remove fa-fw"></span>
+              </a>
+            </span>
+          </div>
+          {% if (role.name != 'user' and role.name != 'root') %}
+          {{ render('auth:users-search-form', { options: { classes: 'roles-user-search-list' }}) }}
+          {% endif %}
+          {% for user in users if user.hasRole(role.role) %}
+          <span class="btn btn-primary btn-sm" url="{{ route('user_role', { username: user.get('username'), role: role.role }) }}">
+            <span class="fa fa-spinner fa-pulse fa-fw roles-user-loading" style="display: none;"></span>
+            {% if user.get('name') == user.get('username') %}
+            {{ user.get('username') }}
+            {% else %}
+            {{ user.get('name') }} ({{ user.get('username') }})
+            {% endif %}
+            {% if (role.name != 'user' and role.name != 'root') %}
+            <a class="bg-primary roles-user-role-remove" href="#">
+              <span class="fa fa-remove fa-fw"></span>
+            </a>
+            {% endif %}
+          </span>
+          {% endfor %}
+        </td>
+      </tr>
+      {% endfor %}
+      {% for role in roles if role.type == 'group' %}
+      <tr>
+        <td>
+          <span class="glyphicon glyphicon-lock"></span>
+          {{ role.role }}
+        </td>
+        <td>
+          {{ role.description }}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

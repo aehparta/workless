@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>
+  <span class="fa fa-wrench"></span>
+  {{ project.name }}
+</h1>
+
+<ul class="nav nav-tabs small">
+  <li role="presentation" {% if page == 'description' %}class="active"{% endif %}>
+    <a href="{{ route('project', { name: project.name, page: 'description' }) }}">
+      <span class="fa fa-home"></span>
+      <span class="hidden-xs">
+        {{ tr('title/description') }}
+      </span>
+    </a>
+  </li>
+  <li role="presentation" {% if page == 'calendar' %}class="active"{% endif %}>
+    <a href="{{ route('project', { name: project.name, page: 'calendar' }) }}">
+      <span class="fa fa-calendar"></span>
+      <span class="hidden-xs">
+        {{ tr('title/calendar') }}
+      </span>
+    </a>
+  </li>
+  <li role="presentation" {% if page == 'documents' %}class="active"{% endif %}>
+    <a href="{{ route('project', { name: project.name, page: 'documents' }) }}">
+      <span class="fa fa-folder-open"></span>
+      <span class="hidden-xs">
+        {{ tr('title/documents') }}
+      </span>
+    </a>
+  </li>
+  {% if authorize('role:admin') or authorize('role:foreman') %}
+    <li role="presentation" {% if page == 'admin' %}class="active"{% endif %}>
+      <a href="{{ route('project', { name: project.name, page: 'admin' }) }}">
+        <span class="fa fa-cog"></span>
+        <span class="hidden-xs">
+          {{ tr('title/admin') }}
+        </span>
+      </a>
+    </li>
+  {% endif %}
+</ul>
+
+{% if page == 'description' %}
+  {% if authorize('role:foreman') %}
+    {{ render('bin:get_summernote', { key: bins.description }, { default: tr('content/description-default') }) }}
+  {% else %}
+    {{ render('bin:get', { key: bins.description }, { default: tr('content/description-default') }) }}
+  {% endif %}
+{% elseif page == 'calendar' %}
+  <div id="fullcalendar" lang="{{ lang() }}" defaultDate="{{ defaultDate }}" url="{{ url }}" dayClick="worklessCalendarDayClick" events="worklessCalendarEvents"></div>
+{% elseif page == 'documents' %}
+  {{ render('project_files', { name: project.name, path: path }) }}
+{% elseif page == 'admin' %}
+  {{ render('project_admin', { name: project.name }) }}
+{% endif %}
+
+{% endblock content %}

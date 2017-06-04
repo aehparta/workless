@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 id='page-title'>{{ tr('title/403') }}</h1>
+<p>
+{{ tr('msg/error/403') }}
+</p>
+
+{% if not username() %}
+{{ render('auth:login-form') }}
+{% endif %}
+
+{% endblock content %}

@@ -1,0 +1,29 @@
+
+common:
+  pattern: /common
+
+frontpage:
+  pattern: /
+
+auth:
+  pattern: /auth
+
+bootstrap:
+  pattern: /bootstrap
+  access: role:user
+
+bin:
+  pattern: /bin
+  access: role:user
+
+workless:
+  pattern: /project
+  access: role:user
+
+admin:
+  pattern: /admin
+  access: role:admin
+
+fullcalendar:
+  pattern: /calendar
+  access: role:user

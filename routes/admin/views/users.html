@@ -1,0 +1,91 @@
+<div class="input-group pull-right">
+  <span class="input-group-addon" id="search-label">
+    <span class="fa fa-search"></span>
+  </span>
+  <input type="text" class="form-control table-search-input" search-target="admin-users-list" search-previous="" placeholder="{{ tr('label/users-search') }}" aria-describedby="search-label"/>
+</div>
+<div class="panel panel-default">
+  <table id="admin-users-list" class="table table-hover table-searchable table-sortable" searchable="yes">
+    <thead>
+      <tr class="bg-primary">
+        <th class="th-sortable" sort-id="username">
+          <span class="fa fa-user"></span>
+          {{ tr('label/username') }}
+        </th>
+        <th class="th-sortable" sort-id="name">
+          <span class="fa fa-credit-card"></span>
+          {{ tr('label/name') }}
+        </th>
+        <th class="hidden-xs th-sortable" sort-id="email">
+          <span class="fa fa-envelope"></span>
+          {{ tr('label/email') }}
+        </th>
+        <th>
+          <span class="fa fa-cog"></span>
+        </th>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <a href="{{ route('auth:create') }}">
+            <span class="fa fa-user-plus"></span>
+            {{ tr('label/user-create') }}
+          </a>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users%}
+      <tr>
+        <td searchable="yes" search-value="{{ user.get('username') }} {{ user.get('name') }} {{ user.get('email') }}" sort-id="username" sort-value="{{ user.get('username') }}">
+          <span class="fa fa-user"></span>
+          {{ user.get('username') }}
+        </td>
+        <td sort-id="name" sort-value="{{ user.get('name') }}">
+          {{ user.get('name') }}
+        </td>
+        <td class="hidden-xs" sort-id="email" sort-value="{{ user.get('email') }}">
+          {{ user.get('email') }}
+        </td>
+        <td>
+          {% if username() != user.get('username') %}
+          <div class="btn-group">
+            <button type="button" class="btn btn-xs btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="fa fa-cog"></span>
+            </button>
+            <ul class="dropdown-menu pull-right">
+              <li>
+                <a href="{{ route('auth:password_for_user', { username: user.get('username') }) }}">
+                  <span class="fa fa-lock"></span>
+                  {{ tr('label/password-change') }}
+                </a>
+              </li>
+              <li>
+                <a href="{{ route('auth:settings', { username: user.get('username') }) }}">
+                  <span class="fa fa-edit"></span>
+                  {{ tr('label/settings') }}
+                </a>
+              </li>
+              {% if authorize('role:root') %}
+              <li>
+                <a href="{{ route('auth:fake', { username: user.get('username') }) }}">
+                  <span class="fa fa-user-secret"></span>
+                  {{ tr('label/fake-user') }}
+                </a>
+              </li>
+              {% endif %}
+              <li role="separator" class="divider"></li>
+              <li>
+                <a href="{{ route('user_delete', { username: user.get('username') }) }}" class="dialog-yes-no" title="{{ tr('title/user-delete') }}: {{ user.get('username') }}" message="{{ tr('content/user-delete') }}">
+                  <span class="fa fa-trash"></span>
+                  {{ tr('actions/delete') }}
+                </a>
+              </li>
+            </ul>
+          </div>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

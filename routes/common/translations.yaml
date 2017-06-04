@@ -1,0 +1,26 @@
+en:
+  title:
+    dialog-yes-no: 'Are you sure?'
+    please-wait: 'Please wait'
+  content:
+    dialog-yes-no: 'Are you sure about this action?'
+    reload-after-action-complete: 'Page will reload after current action is complete.'
+  msg:
+    error:
+      ajax-request-failed: 'Ajax request failed.'
+  actions:
+    action-yes: 'Yes'
+    action-no: 'No'
+fi:
+  title:
+    dialog-yes-no: 'Oletko varma?'
+    please-wait: 'Ole hyvä ja odota'
+  content:
+    dialog-yes-no: 'Oletko varma että haluat tehdä kyseisen toiminnon?'
+    reload-after-action-complete: 'Sivu latautuu uudelleen kun nykyinen toiminto on valmis.'
+  msg:
+    error:
+      ajax-request-failed: 'Ajax pyyntö epäonnistui.'
+  actions:
+    action-yes: 'Kyllä'
+    action-no: 'Ei'

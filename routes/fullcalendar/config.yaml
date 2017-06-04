@@ -1,0 +1,9 @@
+
+javascript:
+  - 'moment-with-locales.min.js'
+  - 'fullcalendar.min.js'
+  - 'fi.js'
+  - 'fullcalendar-local.js'
+
+css:
+  - 'fullcalendar.min.css'

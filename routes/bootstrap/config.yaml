@@ -1,0 +1,14 @@
+javascript:
+  - 'bootstrap.min.js'
+  - 'bootstrap-dialog.min.js'
+  - 'summernote.min.js'
+  - 'summernote-block.js'
+  - 'avatar.js'
+  - 'bootstrap-toggle.min.js'
+
+css:
+  - 'bootstrap.min.css'
+  - 'bootstrap-dialog.min.css'
+  - 'summernote.css'
+  - 'summernote-local.css'
+  - 'bootstrap-toggle.min.css'

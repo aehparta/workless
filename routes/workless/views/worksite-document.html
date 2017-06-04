@@ -1,0 +1,376 @@
+{% extends 'base.html' %}
+{% block content %}
+<form id="worksite-document" class="" role="form" action="{{ route('bin:json', { key: key }) }}" method="post">
+  <div class="pull-right hidden-print">
+    {% if not new %}
+      {% if data.confirmed and not data.accepted and authorize('role:supervisor') %}
+        <label class="btn btn-warning">
+          <input type="checkbox" autocomplete="off" name="data[accepted]" value="{{ name() }}" />
+          {{ tr('label/document-accept') }}
+        </label>
+      {% endif %}
+      {% if not data.confirmed and authorize('role:foreman') %}
+        <label class="btn btn-warning">
+          <input type="checkbox" autocomplete="off" name="data[confirmed]" value="{{ name() }}" />
+          {{ tr('label/document-accept') }}
+        </label>
+      {% endif %}
+    {% endif %}
+    {% if not data.confirmed and authorize('role:foreman') %}
+      {% if not new %}
+        <button type="button" class="btn btn-danger dialog-yes-no" title="{{ tr('title/document-delete-confirm', project, page) }}" message="{{ tr('content/document-delete-confirm', project, page) }}" href="{{ route('document', { name: project, action: 'delete', year: year, month: month, day: day }) }}">
+          <span class="glyphicon glyphicon-trash"></span>
+        </button>
+      {% endif %}
+    {% endif %}
+    {% if (not data.confirmed and authorize('role:foreman')) or (not data.accepted and authorize('role:supervisor')) %}
+      <button id="worksite-document-save" type="submit" class="btn btn-primary">
+        <span class="glyphicon glyphicon-save"></span>
+        {{ tr('actions/save') }}
+      </button>
+    {% endif %}
+  </div>
+  <div class="hidden-print">
+    <button type="button" class="btn btn-default" onClick="window.history.back()" title="{{ tr('actions/cancel') }}">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+    </button>
+    <button type="button" class="btn btn-default" onClick="window.print()" title="{{ tr('actions/print') }}">
+      <span class="glyphicon glyphicon-print"></span>
+    </button>
+  </div>
+  <div class="help-block hidden-print"></div>
+  <table class="table table-bordered">
+    <tr>
+      <td colspan="10">
+        <label>
+          {{ tr('title/project') }}:
+        </label>
+        {{ project }}
+      </td>
+      <td colspan="2">
+        <label>
+          {{ tr('title/document-page') }}:
+        </label>
+        {{ page }}
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <label>
+          Päivämäärä:
+        </label>
+        {{ date|date('j.n.Y') }}
+      </td>
+      <td colspan="4">
+        <label>
+          Viikko:
+        </label>
+        {{ date|date('W') }}
+      </td>
+      <td colspan="4">
+        <label>
+          Viikonpäivä:
+        </label>
+        {{ weekday }}
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <label>
+          Sää, klo 12:00
+        </label>
+      </td>
+      <td colspan="3" class="form-inline">
+        <label>
+          Lämpötila (°C):
+        </label>
+        <input class="pull-right" name="data[weather][at1200]" value="{{ data.weather.at1200 }}" type="text" size="2" maxlength="2" style="text-align: right;" {% if not authorize('role:foreman') or data.confirmed %}readonly{% endif %} />
+      </td>
+      <td colspan="6" class="form-inline" style="border-rigth: 0px;">
+        <label>
+          Kuvaus:
+        </label>
+        <input class="pull-right" name="data[weather][description]" style="width: 80%;" type="text" value="{{ data.weather.description }}" {% if not authorize('role:foreman') or data.confirmed %}readonly{% endif %} />
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <label>
+          Työntekijät
+        </label>
+      </td>
+      <td colspan="3">
+        <ul id="work-workers" template="#work-worker-template" class="list-group list-plain ul-addable list-striped list-hover">
+          {% for name, value in data.workers %}
+            <li class="list-group-item ul-addable-item">
+              <label>
+                {{ name }}:
+              </label>
+              <div class="pull-right">
+                <input type="text" name="data[workers][{{ name }}]" value="{{ value }}" size="2" maxlength="2" style="text-align: right;" {% if not authorize('role:foreman') or data.confirmed %}readonly{% endif %} />
+                {% if authorize('role:foreman') and not data.confirmed %}
+                  <button type="button" class="btn btn-xs btn-danger ul-addable-item-remove-ask hidden-print">
+                      <span class="fa fa-trash"></span>
+                  </button>
+                {% endif %}
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+        {% if authorize('role:foreman') and not data.confirmed %}
+          <div class="input-group hidden-print" style="width: 100%;">
+            <input id="work-workers-add" class="form-control ul-addable-input" target="#work-workers" type="text" value="" placeholder="Uusi tyyppi" />
+            <span class="input-group-btn">
+              <button type="button" class="ul-addable-input-submit btn btn-default" target="#work-workers-add">
+                <span class="fa fa-plus"></span>
+              </button>
+            </span>
+          </div>
+        {% endif %}
+      </td>
+      <td colspan="3">
+        <label>
+          Koneet
+        </label>
+      </td>
+      <td colspan="3">
+        <ul id="work-machines" template="#work-machine-template" class="list-group list-plain ul-addable list-striped list-hover">
+          {% for name, value in data.machines %}
+            <li class="list-group-item ul-addable-item">
+              <label>
+                {{ name }}:
+              </label>
+              <div class="pull-right">
+                <input type="text" name="data[machines][{{ name }}]" value="{{ value }}" size="2" maxlength="2" style="text-align: right;" {% if not authorize('role:foreman') or data.confirmed %}readonly{% endif %} />
+                {% if authorize('role:foreman') and not data.confirmed %}
+                  <button type="button" class="btn btn-xs btn-danger ul-addable-item-remove-ask hidden-print">
+                      <span class="fa fa-trash"></span>
+                  </button>
+                {% endif %}
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+        {% if authorize('role:foreman') and not data.confirmed %}
+          <div class="input-group hidden-print" style="width: 100%;">
+            <input id="work-machines-add" class="form-control ul-addable-input" target="#work-machines" type="text" value="" placeholder="Uusi konetyyppi" />
+            <span class="input-group-btn">
+              <button type="button" class="ul-addable-input-submit btn btn-default" target="#work-machines-add">
+                <span class="fa fa-plus"></span>
+              </button>
+            </span>
+          </div>
+        {% endif %}
+      </td>    </tr>
+    <tr>
+      <td colspan="3">
+        <label>
+          Työmaan tilanne
+        </label>
+      </td>
+      <td colspan="3">
+        <label>
+          Aloitettu:
+        </label>
+        <ul id="work-progress-items-started" progress="started" class="work-progress-items list-group list-plain ul-addable list-striped list-hover" template="#work-progress-item-template" style="padding-bottom: 20px; margin-bottom: 0px;">
+          {% for value in data.work.progress.started %}
+            <li class="list-group-item ul-addable-item">
+              {{ value }}
+              {% if authorize('role:foreman') and not data.confirmed %}
+                <button type="button" class="btn btn-xs btn-danger pull-right ul-addable-item-remove-ask hidden-print">
+                    <span class="fa fa-trash img-responsive"></span>
+                </button>
+              {% endif %}
+              <input type="hidden" name="data[work][progress][started][]" value="{{ value }}" />
+            </li>
+          {% endfor %}
+        </ul>
+        {% if authorize('role:foreman') and not data.confirmed %}
+          <div class="input-group hidden-print" style="width: 100%;">
+            <input id="work-progress-started-add" class="form-control ul-addable-input" target="#work-progress-items-started" type="text" value="" placeholder="Uusi työvaihe" />
+            <span class="input-group-btn">
+              <button type="button" class="ul-addable-input-submit btn btn-default" target="#work-progress-started-add">
+                <span class="fa fa-plus"></span>
+              </button>
+            </span>
+          </div>
+        {% endif %}
+      </td>
+      <td colspan="3">
+        <label>
+          Kesken:
+        </label>
+        <ul id="work-progress-items-unfinished" progress="unfinished" class="work-progress-items list-group list-plain ul-addable list-striped list-hover" style="padding-bottom: 20px; margin-bottom: 0px;">
+          {% for value in data.work.progress.unfinished %}
+            <li class="list-group-item ul-addable-item">
+              {{ value }}
+              {% if authorize('role:foreman') and not data.confirmed %}
+                <button type="button" class="btn btn-xs btn-danger pull-right ul-addable-item-remove-ask hidden-print">
+                    <span class="fa fa-trash img-responsive"></span>
+                </button>
+              {% endif %}
+              <input type="hidden" name="data[work][progress][unfinished][]" value="{{ value }}" />
+            </li>
+          {% endfor %}
+        </ul>
+      </td>
+      <td colspan="3">
+        <label>
+          Valmis:
+        </label>
+        <ul id="work-progress-items-finished" progress="finished" class="work-progress-items list-group list-plain ul-addable list-striped list-hover" style="padding-bottom: 20px; margin-bottom: 0px;">
+          {% for value in data.work.progress.finished %}
+            <li class="list-group-item ul-addable-item">
+              {{ value }}
+              {% if authorize('role:foreman') and not data.confirmed %}
+                <button type="button" class="btn btn-xs btn-danger pull-right ul-addable-item-remove-ask hidden-print">
+                    <span class="fa fa-trash img-responsive"></span>
+                </button>
+              {% endif %}
+              <input type="hidden" name="data[work][progress][finished][]" value="{{ value }}" />
+            </li>
+          {% endfor %}
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <label>
+          Muut merkinnät
+        </label>
+      </td>
+      <td colspan="9">
+        {% if not data.confirmed and authorize('role:foreman') %}
+          <textarea class="form-control" name="data[foreman][comment]">{{ data.foreman.comment }}</textarea>
+        {% else %}
+          {{ data.foreman.comment }}
+          <textarea class="hidden" name="data[foreman][comment]">{{ data.foreman.comment }}</textarea>
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <label>
+          Valvojan kommentit
+        </label>
+      </td>
+      <td colspan="9">
+        {% if not data.accepted and authorize('role:supervisor') %}
+          <textarea class="form-control" name="data[supervisor][comment]">{{ data.supervisor.comment }}</textarea>
+        {% else %}
+          {{ data.supervisor.comment }}
+          <textarea class="hidden" name="data[supervisor][comment]">{{ data.supervisor.comment }}</textarea>
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" rowspan="2">
+        <label>
+          Allekirjoitus
+        </label>
+      </td>
+      <td colspan="5">
+        {% if data.confirmed %}
+          <label>
+            Työmaajohtaja:
+          </label>
+          <br />
+          {{ data.confirmed }}
+          <input name="data[confirmed]" type="hidden" readonly value="{{ data.confirmed }}"/>
+        {% else %}
+          <label class="bg-danger">
+            Hyväksymättä
+          </label>
+        {% endif %}
+      </td>
+      <td colspan="4">
+        <label>
+          Päivämäärä:
+        </label>
+        <br />
+        {% if data.confirmed %}
+          {{ data.confirmed_date|date('j.n.Y') }}
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5">
+        {% if data.accepted %}
+          <label>
+            Valvoja:
+          </label>
+          <br />
+          {{ data.accepted }}
+          <input name="data[accepted]" type="hidden" readonly value="{{ data.accepted }}"/>
+        {% else %}
+          <label class="bg-danger">
+            Hyväksymättä
+          </label>
+        {% endif %}
+      </td>
+      <td colspan="4">
+        <label>
+          Päivämäärä:
+        </label>
+        <br />
+        {% if data.accepted %}
+          {{ data.accepted_date|date('j.n.Y') }}
+        {% endif %}
+      </td>
+    </tr>
+  </table>
+</form>
+
+{% if authorize('role:foreman') or authorize('role:supervisor') or files|length > 0 %}
+  <div class="worksite-document-attachments hidden-print">
+    <hr />
+    <a href="{{ route('bin:dl', { key: bin }) }}" class="btn btn-default pull-right workless-folder-download" title="{{ tr('title/attachments-download') }}">
+        <span class="fa fa-download img-responsive"></span>
+    </a>
+    <h1>
+      <span class="fa fa-files-o"></span>
+      {{ tr('title/attachments') }}
+    </h1>
+    {% include 'files.html' %}
+  </div>
+{% endif %}
+
+<div class="hidden" id="work-progress-item-template">
+  <li class="list-group-item ul-addable-item">
+    %value%
+    <button type="button" class="btn btn-xs btn-danger pull-right ul-addable-item-remove-ask hidden-print">
+        <span class="fa fa-trash img-responsive"></span>
+    </button>
+    <input type="hidden" name="data[work][progress][started][]" value="%value%" />
+  </li>
+</div>
+
+<div class="hidden" id="work-machine-template">
+  <li class="list-group-item ul-addable-item">
+    <label>
+      %value%:
+    </label>
+    <div class="pull-right">
+      <input type="text" name="data[machines][%value%]" value="" size="2" maxlength="2" style="text-align: right;"/>
+      <button type="button" class="btn btn-xs btn-danger ul-addable-item-remove-ask hidden-print">
+          <span class="fa fa-trash"></span>
+      </button>
+    </div>
+  </li>
+</div>
+
+<div class="hidden" id="work-worker-template">
+  <li class="list-group-item ul-addable-item">
+    <label>
+      %value%:
+    </label>
+    <div class="pull-right">
+      <input type="text" name="data[workers][%value%]" value="" size="2" maxlength="2" style="text-align: right;"/>
+      <button type="button" class="btn btn-xs btn-danger ul-addable-item-remove-ask hidden-print">
+          <span class="fa fa-trash"></span>
+      </button>
+    </div>
+  </li>
+</div>
+
+{% endblock content %}

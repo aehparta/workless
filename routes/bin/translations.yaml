@@ -1,0 +1,26 @@
+en:
+  label:
+    select-upload-file: 'Select file...'
+  msg:
+    error:
+      upload: 'Upload failed.'
+      upload-file: 'Failed to upload file "%s".'
+      file-not-exist: 'File or folder "%s" does not exist.'
+      file-delete: 'Failed to delete file or folder "%s".'
+      invalid-json: 'Invalid JSON data.'
+      invalid-json-post: 'Post request must contain an array to be saved as JSON.'
+    success:
+      upload-file: 'File "%s" uploaded successfully.'
+fi:
+  label:
+    select-upload-file: 'Valitse tiedosto...'
+  msg:
+    error:
+      upload: 'Lataus epäonnistui.'
+      upload-file: 'Tiedoston "%s" lataus epäonnistui.'
+      file-not-exist: 'Tiedostoa tai kansiota "%s" ei ole olemassa.'
+      file-delete: 'Tiedoston tai kansion "%s" poisto epäonnistui.'
+      invalid-json: 'Virheellinen JSON sisältö.'
+      invalid-json-post: 'Post pyynnön täytyy sisältää JSON muotoon tallennettava taulukko.'
+    success:
+      upload-file: 'Tiedoston "%s" lataus onnistui.'

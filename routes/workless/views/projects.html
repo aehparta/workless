@@ -1,0 +1,24 @@
+<h1>
+  <span class="fa fa-home"></span>
+  {{ tr('title/projects') }}
+</h1>
+<div class="panel panel-default">
+  <div class="list-group">
+    {% if authorize('role:foreman') %}
+      <div class="list-group-item">
+        <a href="{{ route('project_create') }}">
+          <span class="fa fa-plus"></span>
+          {{ tr('label/project-new') }}
+        </a>
+      </div>
+    {% endif %}
+    {% for project in projects %}
+    <div class="list-group-item">
+      <span class="fa fa-chevron-circle-right"></span>
+      <a href="{{ route('project', { name: project.name }) }}">
+        {{ project.name }}
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</div>

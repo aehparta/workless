@@ -1,0 +1,23 @@
+{% if authorize('role:user') %}
+  <p>
+    <div class="summernote" rest-block="{{ route('file', { key: key }) }}">
+      <div class="summernote-content">
+        {{ render('get', { key: key }, { default: default }) }}
+      </div>
+      <div class="summernote-toolbox">
+        <button type="button" class="summernote-save btn btn-primary btn-sm">
+          <span class="glyphicon glyphicon-ok"></span>
+          {{ tr('actions/save') }}
+        </button>
+        <button type="button" class="summernote-cancel btn btn-default btn-sm">
+          <span class="glyphicon glyphicon-repeat"></span>
+          {{ tr('actions/cancel') }}
+        </button>
+      </div>
+    </div>
+  </p>
+{% else %}
+  <p>
+    {{ render('get', { key: key }, { default: default }) }}
+  </p>
+{% endif %}

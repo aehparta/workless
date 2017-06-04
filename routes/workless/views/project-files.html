@@ -1,0 +1,18 @@
+{% if authorize('role:foreman') or authorize('role:supervisor') %}
+  <a href="{{ route('bin:folder', { key: bin }) }}" class="btn btn-default pull-right workless-folder-create" title="{{ tr('title/folder-create') }}">
+    <span class="fa fa-folder-open img-responsive"></span>
+  </a>
+{% endif %}
+<a href="{{ route('bin:dl', { key: bin }) }}" class="btn btn-default pull-right workless-folder-download" title="{{ tr('title/folder-download', breadcrumbs|last.name) }}">
+    <span class="fa fa-download img-responsive"></span>
+</a>
+<ol class="breadcrumb">
+  {% for crumb in breadcrumbs %}
+    {% if not loop.last %}
+      <li><a href="{{ crumb.url }}">{{ crumb.name }}</a></li>
+    {% else %}
+      <li class="active">{{ crumb.name }}</li>
+    {% endif %}
+  {% endfor %}
+</ol>
+{% include 'files.html' %}

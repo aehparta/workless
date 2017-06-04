@@ -1,0 +1,5 @@
+
+calendar:
+  pattern: '/'
+  controller: Fullcalendar
+  method: 'get'

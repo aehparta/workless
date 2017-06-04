@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if not authorize('role:user') %}
+  {{ render('auth:login-form') }}
+{% else %}
+{{ render('workless:projects') }}
+{% endif %}
+
+
+{% endblock content %}
+

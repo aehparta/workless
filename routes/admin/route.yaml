@@ -1,0 +1,47 @@
+index:
+  pattern: '/'
+  controller: 'Admin'
+  method: 'get'
+  action: 'index'
+  format: 'html'
+
+users:
+  pattern: '/users'
+  controller: 'Admin'
+  method: 'get'
+  action: 'users'
+
+user_delete:
+  pattern: '/user/delete/{username}'
+  controller: 'Admin'
+  method: 'get'
+  action: 'userDelete'
+
+user_role:
+  pattern: '/user/roles/{username}/{role?}'
+  controller: Admin
+  action: userRoles
+  format: json
+
+roles:
+  pattern: '/roles'
+  controller: 'Admin'
+  method: 'get'
+  action: 'roles'
+
+role:
+  pattern: '/role/{role}'
+  controller: 'Admin'
+  method: 'get'
+  action: 'role'
+
+role_create:
+  pattern: '/role/create'
+  controller: 'Admin'
+  action: 'roleCreate'
+
+role_delete:
+  pattern: '/role/delete/{role}'
+  controller: 'Admin'
+  action: 'roleDelete'
+  method: 'get'

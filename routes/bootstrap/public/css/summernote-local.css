@@ -1,0 +1,15 @@
+
+.summernote-content {
+}
+
+.summernote-content:hover {
+}
+
+.summernote-toolbox {
+	display: none;
+	margin-bottom: 20px;
+}
+
+.summernote-single-edit:hover {
+	cursor: pointer;
+}

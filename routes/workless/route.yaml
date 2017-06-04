@@ -1,0 +1,67 @@
+projects:
+  controller: Workless
+  action: projects
+
+projects_navi:
+  controller: Workless
+  action: projectsNavi
+
+project_create:
+  pattern: /
+  controller: Workless
+  action: projectCreate
+
+calendar:
+  pattern: /{name}/calendar/{year?=|int}/{month?=|int}
+  controller: Workless
+  action: calendar
+
+calendar_day:
+  pattern: /{name}/calendar/{year|int}/{month|int}/{day|int}
+  controller: Workless
+  action: calendarDay
+
+calendar_timeframe:
+  pattern: /{name}/calendar/{year1|int}/{month1|int}/{day1|int}/{year2|int}/{month2|int}/{day2|int}
+  controller: Workless
+  action: calendarTimeframe
+
+document:
+  pattern: /{name}/document/{action}/{year|int}/{month|int}/{day|int}
+  controller: Workless
+  action: document
+
+project_print_month_empty:
+  pattern: /{name}/print/month
+  controller: Workless
+  action: printMonth
+
+# calendar:
+#   pattern: /{name}/calendar/{year?|int}/{month?|int}
+#   controller: Workless
+#   action: project
+
+project_user_access:
+  pattern: /{name}/user/access/{username}
+  controller: Workless
+  action: access
+  access: [ 'role:admin', 'role:foreman' ]
+
+project_documents:
+  pattern: /{name}/{page=documents}/{path|rest}
+  controller: Workless
+  action: project
+
+project:
+  pattern: /{name}/{page=description}
+  controller: Workless
+  action: project
+
+project_files:
+  controller: Workless
+  action: files
+
+project_admin:
+  controller: Workless
+  action: admin
+  access: [ 'role:admin', 'role:foreman' ]

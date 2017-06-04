@@ -1,0 +1,63 @@
+en:
+  title:
+    admin: 'Admin'
+    config: 'Configuration'
+    user-delete: 'Delete user'
+  label:
+    users: 'Users'
+    user-create: 'Create new user'
+    role: 'Role'
+    roles: 'Roles'
+    group-create: 'Create new group'
+    description: 'Description'
+  content:
+    user-delete: 'Are you sure you want to delete selected user?'
+  msg:
+    error:
+      user-invalid: 'Invalid username.'
+      user-delete: 'User delete failed.'
+      user-role-required: 'Missing role.'
+    success:
+      user-delete: 'User deleted successfully.'
+  roles:
+    root:
+      title: 'Superuser'
+      description: 'Ultimate users, users can be added or removed only from command line.'
+    admin:
+      title: 'Administrator'
+      description: 'Powerful users with almost everything on their grasp.'
+    user:
+      title: 'User'
+      description: 'All users.'
+
+fi:
+  title:
+    admin: 'Ylläpito'
+    config: 'Asetukset'
+    user-delete: 'Poista käyttäjä'
+  label:
+    users: 'Käyttäjät'
+    user-create: 'Luo uusi käyttäjä'
+    role: 'Rooli'
+    roles: 'Roolit'
+    group-create: 'Luo uusi ryhmä'
+    description: 'Kuvaus'
+  content:
+    user-delete: 'Oletko varma että haluat poistaa valitun käyttäjän?'
+  msg:
+    error:
+      user-invalid: 'Käyttäjää ei löydy.'
+      user-delete: 'Käyttäjän poisto epäonnistui.'
+      user-role-required: 'Roolia ei annettu.'
+    success:
+      user-delete: 'Käyttäjä poistettu.'
+  roles:
+    root:
+      title: 'Superuser'
+      description: 'Käyttäjät kaikilla oikeuksilla, voidaan lisätä ja poistaa vain komentoriviltä.'
+    admin:
+      title: 'Ylläpitäjä'
+      description: 'Käyttäjät lähes kaikilla oikeuksilla.'
+    user:
+      title: 'Käyttäjä'
+      description: 'Kaikki käyttäjät.'

@@ -1,0 +1,14 @@
+index:
+    pattern: '/'
+    controller: 'Frontpage'
+    method: 'get'
+    action: 'index'
+    format: 'html'
+
+404:
+    pattern: '/404'
+    controller: 'Frontpage'
+    method: 'get'
+    action: 'notFound'
+    format: 'html'
+

@@ -1,0 +1,83 @@
+en:
+  title:
+    site: 'WorkLess'
+    home: 'Home'
+    404: 'Page not found'
+  label:
+    email: 'Email'
+    name: 'Name'
+    account: 'Account'
+    username: 'Username'
+    password: 'Password'
+    lang: 'Language'
+  actions:
+    save: 'Save'
+    add: 'Add'
+    new: 'New'
+    delete: 'Delete'
+    remove: 'Remove'
+    hide: 'Hide'
+    show: 'Show'
+    create: 'Create'
+    modify: 'Modify'
+    cancel: 'Cancel'
+    upload: 'Send file'
+    print: 'Print'
+    sure: 'Yes'
+    stop: 'No'
+  msg:
+    error:
+      save: 'Save failed, please try again. If the problem persists, contact support.'
+      404: 'Page you are looking for, was not found.'
+  roles:
+    foreman:
+      title: 'Foreman'
+      description: 'Project foremans.'
+    supervisor:
+      title: 'Supervisor'
+      description: 'These users can view projects assigned to them and confirm documents from those projects.'
+    client:
+      title: 'Client'
+      description: 'These users can view projects assigned to them and accept documents from those projects.'
+
+fi:
+  title:
+    site: 'WorkLess'
+    home: 'Etusivu'
+    404: 'Sivua ei löytynyt'
+  label:
+    email: 'Sähköposti'
+    name: 'Nimi'
+    account: 'Tunnus'
+    username: 'Käyttäjätunnus'
+    password: 'Salasana'
+    lang: 'Kieli'
+  actions:
+    save: 'Tallenna'
+    add: 'Lisää'
+    new: 'Uusi'
+    delete: 'Poista'
+    remove: 'Poista'
+    hide: 'Piilota'
+    show: 'Näytä'
+    create: 'Luo'
+    modify: 'Muokkaa'
+    cancel: 'Peruuta'
+    upload: 'Lähetä tiedosto'
+    print: 'Tulosta'
+    sure: 'Kyllä'
+    stop: 'Ei'
+  msg:
+    error:
+      save: 'Tallennus epäonnistui. Jos ongelma toistuu, ota yhteyttä ylläpitoon.'
+      404: 'Etsimääsi sivua ei löytynyt.'
+  roles:
+    foreman:
+      title: 'Työnjohtaja'
+      description: 'Projektin ylläpitäjä.'
+    supervisor:
+      title: 'Tarkastaja'
+      description: 'Käyttäjä joka voi katsoa hänelle määrättyjä projekteja ja tarkistaa näiden hankkeiden dokumentit.'
+    client:
+      title: 'Asiakas'
+      description: 'Projektin tilannut käyttäjä. Voi katsoa hänelle määrättyjä hankkeita ja hyväksyä näiden hankkeiden dokumentit.'

@@ -1,0 +1,19 @@
+{% if authorize('role:user') %}
+  <div class='summernote' rest-block='{{ route('block:put', { key: key }, {}, { format: 'json' }) }}'>
+    <div class='summernote-content'>
+      {{ render('block:get', { key: key }) }}
+    </div>
+    <div class='summernote-toolbox'>
+      <button type='button' class='summernote-save btn btn-primary btn-sm'>
+        <i class='fa fa-edit'>&nbsp;Save</i>
+      </button>
+      <button type='button' class='summernote-cancel btn btn-warning btn-sm'>
+        <i class='fa fa-edit'>&nbsp;Cancel</i>
+      </button>
+    </div>
+  </div>
+{% else %}
+  <p>
+    {{ render('block:get', { key: key }) }}
+  </p>
+{% endif %}
