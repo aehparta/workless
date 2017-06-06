@@ -1,0 +1,7 @@
+Options +FollowSymlinks
+RewriteEngine on
+AddDefaultCharset UTF-8
+
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^(.*)\.* app.php [NC,L,NE]
