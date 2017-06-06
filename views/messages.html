@@ -1,0 +1,24 @@
+{% for kernel_msg in msg('success') %}
+  <div class="alert alert-success">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    {{ kernel_msg }}
+  </div>
+{% endfor %}
+{% for kernel_msg in msg('info') %}
+  <div class="alert alert-info">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    {{ kernel_msg }}
+  </div>
+{% endfor %}
+{% for kernel_msg in msg('warning') %}
+  <div class="alert alert-warning">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    {{ kernel_msg }}
+  </div>
+{% endfor %}
+{% for kernel_msg in msg('error') %}
+  <div class="alert alert-danger">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    {{ kernel_msg }}
+  </div>
+{% endfor %}

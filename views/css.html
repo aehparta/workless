@@ -1,0 +1,9 @@
+{% for asset in css() %}
+{% if asset.type == 'static' or asset.type == 'url' %}
+<link href='{{ asset.url }}' rel="stylesheet" />
+{% elseif asset.type == 'twig' %}
+<style>
+{% include asset.path %}
+</style>
+{% endif %}
+{% endfor %}

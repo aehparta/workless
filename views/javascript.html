@@ -1,0 +1,9 @@
+{% for asset in javascript() %}
+{% if asset.type == 'static' %}
+<script src='{{ asset.url }}' type="text/javascript"></script>
+{% elseif asset.type == 'twig' %}
+<script type="text/javascript">
+{% include asset.path|replace({ (expand('{path:routes}')): '' }) %}
+</script>
+{% endif %}
+{% endfor %}
